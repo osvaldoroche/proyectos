@@ -121,4 +121,4 @@ Proyecto donde se mostrará la evolución de las principales variables del comer
 
 # 3. Informe Final
 
-![Table de comercio exterior](comercio_exterior.jpg)
+![Table de comercio exterior](dashboard_desing.jpg)
