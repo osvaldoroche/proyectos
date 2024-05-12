@@ -15,12 +15,6 @@ Este es una análisis de ventas a través de un modelado de datos en Power BI. L
 
 5. Ganancias por ciudad obtenidas por mes. 
 
-
-## 1.2. Descripción de los datos
-
-Las descripción de las columnas son las siguientes
-
-
 # 2. Modelo de datos
 
 ## 2.1. Hechos
