@@ -1,0 +1,15 @@
+# 1. Suppli chain logistics problem
+
+ Este es un proyecto realizado con los datos de Kaggle que se pueden encontrar en el siguiente link: https://www.kaggle.com/datasets/anisseezzebdi/supply-chain-logistics-problem
+
+## 1.1. Problema
+
+Un fabricante mundial de microchips proporciona un conjunto de datos reales de una red **logística de salida**, conocida como **logística de distribución**, que es la fase de la cadena de suministro que abarca la gestión de almacenamiento y distribución de mercaderías. La empresa ha facilitado datos sobre la demanda de 9.215 pedidos que deben enrutarse a través de su red de cadena de suministro de salida, compuesta por 19 almacenes, 11 puertos de origen y un puerto de destino. Los almacenes están limitados a un conjunto específico de productos que almacenan; además, algunos almacenes están dedicados a atender únicamente a un conjunto concreto de clientes. Además, los almacenes están limitados por el número de pedidos que pueden procesar en un solo día. Un cliente que hace un pedido decide qué tipo de nivel de servicio necesita: DTD (puerta a puerta), DTP (puerta a puerto) o CRF (carga remitida por el cliente). En el caso del CRF, el cliente organiza el flete y la empresa sólo incurre en los gastos de almacén. En la mayoría de los casos, un pedido puede enviarse a través de una de las 9 empresas de mensajería que ofrecen diferentes tarifas para distintas franjas de peso y niveles de servicio. Aunque la mayoría de los envíos se realizan por vía aérea, algunos pedidos se envían por tierra, en camiones. La mayoría de los transportistas ofrecen tarifas reducidas a medida que aumenta el peso total del envío en función de las distintas franjas de peso. Sin embargo, se sigue aplicando un cargo mínimo por envío. Además, los envíos más rápidos suelen ser más caros, pero ofrecen mayor satisfacción al cliente. El nivel de servicio al cliente queda fuera del ámbito de esta investigación.
+
+## 1.2. Datos
+
+El conjunto de datos se divide en siete tablas, una tabla para todos los pedidos a los que se les debe asignar una ruta (*tabla OrderList*) y seis archivos adicionales que especifican el problema y las restricciones. Por ejemplo, la tabla *FreightRates* describe todos los mensajeros disponibles, las brechas de peso para cada carril y las tarifas asociadas. La ruta de envío se refiere a la combinación de nivel de servicio, modo de transporte y mensajería entre dos puertos de envío. La tabla *PlantPorts* describe los enlaces permitidos entre los almacenes y los puertos de envío en el mundo real. Además, la tabla *ProductsPerPlant* enumera todas las combinaciones de productos y almacén admitidas. *VmiCustomers* contiene todos los casos extremos, en los que el almacén solo puede brindar soporte a clientes específicos, mientras que cualquier otro almacén que no figura en la lista puede abastecer a cualquier cliente . Además, *WhCapacities* enumera las capacidades de almacén medidas en el número de pedidos por día y *WhCosts* especifica el costo asociado al almacenamiento de los productos en un almacén determinado medido en dólares por unidad.
+  ] 
+
+# 2. Modelo de datos
+
