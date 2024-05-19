@@ -9,7 +9,83 @@ Un fabricante mundial de microchips proporciona un conjunto de datos reales de u
 ## 1.2. Datos
 
 El conjunto de datos se divide en siete tablas, una tabla para todos los pedidos a los que se les debe asignar una ruta (*tabla OrderList*) y seis archivos adicionales que especifican el problema y las restricciones. Por ejemplo, la tabla *FreightRates* describe todos los mensajeros disponibles, las brechas de peso para cada carril y las tarifas asociadas. La ruta de envío se refiere a la combinación de nivel de servicio, modo de transporte y mensajería entre dos puertos de envío. La tabla *PlantPorts* describe los enlaces permitidos entre los almacenes y los puertos de envío en el mundo real. Además, la tabla *ProductsPerPlant* enumera todas las combinaciones de productos y almacén admitidas. *VmiCustomers* contiene todos los casos extremos, en los que el almacén solo puede brindar soporte a clientes específicos, mientras que cualquier otro almacén que no figura en la lista puede abastecer a cualquier cliente . Además, *WhCapacities* enumera las capacidades de almacén medidas en el número de pedidos por día y *WhCosts* especifica el costo asociado al almacenamiento de los productos en un almacén determinado medido en dólares por unidad.
-  ] 
 
-# 2. Modelo de datos
+# 2. Problema
+
+El fabricante de microchips necesita optimizar su red logística de salida para mejorar la eficiencia y reducir costos. La empresa enfrenta varios desafíos en la gestión de su cadena de suministro de salida, incluyendo la capacidad limitada de almacenes, la elección del mensajero adecuado, y la gestión de las tarifas de envío según el peso y el nivel de servicio requerido por el cliente. La complejidad aumenta debido a la diversidad de productos, las restricciones específicas de los almacenes, y las variaciones en las tarifas de los mensajeros.
+
+## 2.1. Objetivo del proyecto
+
+Desarrollar un dashboard en Power BI que ayude a los gerentes de la cadena de suministro a tomar decisiones informadas basadas en indicadores clave de rendimiento (KPIs). Este dashboard debe proporcionar una visión integral y detallada sobre el flujo de pedidos, costos de almacenamiento, tarifas de envío, y capacidades de los almacenes, permitiendo optimizar rutas de envío y minimizar costos.
+
+
+## 2.2. Preguntas a solventar
+
+**a) Capacidad de Almacenamiento**
+
+1. ¿Qué porcentaje de la capacidad máxima está siendo utilizada en el almacen?
+2. ¿Cuántos pedidos están pendientes por la falta de capacidad de almacenamiento?
+
+**b) Costos de almacenamiento**
+
+3. ¿Cuál es el costo total de almacenamiento en cada almacén?
+4. ¿Cuál es el costo promedio de almacenamiento por unidad de producto en cada almacén?
+
+**c) Eficiencia de Envío**
+
+5. ¿Cuál es el costo de envío por pedido?
+6. ¿Cuál es el costo de envío por peso total de los envíos?
+7. ¿Cuál es el tiempo promedio desde que se procesa un pedido hasta que se entrega?
+
+**d) Utilización de Mensajeros**
+
+8. ¿Cuántos pedidos han sido gestionados por cada empresa de mensajería?
+9. ¿Cuál es el costo promedio de envío por cada empresa de mensajería?
+
+**e) Nivel de servicio**
+
+10. ¿Cuántos pedidos están clasificados por cada tipo de nivel de servicio (DTD, DTP, CRF)?
+11. ¿Qué nivel de servicio se asocia con la mayor satisfacción del cliente (basado en la elección de envíos más rápidos)?
+
+**f) Optimización de rutas**
+
+12. ¿Cómo afectan los cargos mínimos y las tarifas reducidas por peso a los costos totales de envío?
+13. ¿Cuáles son las rutas de envío más eficientes en términos de costo y tiempo de entrega?
+
+## 2.3. Indicadores necesarios
+
+Se han identificado una serie de indicadores clave de rendimiento (KPI's) para responder las preguntas del problema en cada uno de los puntos:
+
+**a) Capacidad de Almacenes:**
+
+Pedidos Procesados vs. Capacidad Máxima: Mostrar el porcentaje de capacidad utilizada en cada almacén.
+Pedidos Pendientes: Número de pedidos que no pudieron ser procesados debido a la falta de capacidad.
+
+**b) Costos de Almacenamiento:**
+
+Costo Total de Almacenamiento por Almacén: Costo acumulado de almacenamiento en cada almacén.
+Costo Promedio por Unidad Almacenada: Costo promedio de almacenamiento por unidad de producto en cada almacén.
+
+**c) Eficiencia de Envío:**
+
+Costo de Envío por Pedido: Costo total del envío dividido por el número de pedidos.
+Costo de Envío por Peso: Costo total del envío dividido por el peso total de los envíos.
+Tiempo Promedio de Envío: Tiempo promedio desde que se procesa un pedido hasta que se entrega.
+
+**d) Utilización de Mensajeros:**
+
+Distribución de Envíos por Mensajero: Número de pedidos gestionados por cada empresa de mensajería.
+Costo Promedio por Mensajero: Costo promedio de envío por cada empresa de mensajería.
+
+**e) Nivel de Servicio:**
+
+Distribución de Pedidos por Nivel de Servicio: Número de pedidos clasificados por DTD, DTP y CRF.
+Satisfacción del Cliente (Proxy): Medida indirecta basada en la elección de nivel de servicio más rápido (asumido como mayor satisfacción).
+
+**f) Optimización de Rutas:**
+
+Cargos Adicionales por Peso: Análisis de cómo los cargos mínimos y las tarifas reducidas por peso afectan los costos totales.
+Rutas más Eficientes: Identificación de rutas de envío que minimizan costos y tiempos de entrega.
+
+# 3. Modelo de datos
 
