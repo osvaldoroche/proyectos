@@ -1,4 +1,4 @@
-# 1. Suppli chain logistics problem
+# 1. Supply chain logistics problem
 
  Este es un proyecto realizado con los datos de Kaggle que se pueden encontrar en el siguiente link: https://www.kaggle.com/datasets/anisseezzebdi/supply-chain-logistics-problem
 
