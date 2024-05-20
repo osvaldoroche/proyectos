@@ -10,6 +10,7 @@ Un fabricante mundial de microchips proporciona un conjunto de datos reales de u
 
 El conjunto de datos se divide en siete tablas, una tabla para todos los pedidos a los que se les debe asignar una ruta (*tabla OrderList*) y seis archivos adicionales que especifican el problema y las restricciones. Por ejemplo, la tabla *FreightRates* describe todos los mensajeros disponibles, las brechas de peso para cada carril y las tarifas asociadas. La ruta de envío se refiere a la combinación de nivel de servicio, modo de transporte y mensajería entre dos puertos de envío. La tabla *PlantPorts* describe los enlaces permitidos entre los almacenes y los puertos de envío en el mundo real. Además, la tabla *ProductsPerPlant* enumera todas las combinaciones de productos y almacén admitidas. *VmiCustomers* contiene todos los casos extremos, en los que el almacén solo puede brindar soporte a clientes específicos, mientras que cualquier otro almacén que no figura en la lista puede abastecer a cualquier cliente . Además, *WhCapacities* enumera las capacidades de almacén medidas en el número de pedidos por día y *WhCosts* especifica el costo asociado al almacenamiento de los productos en un almacén determinado medido en dólares por unidad.
 
+
 # 2. Problema
 
 El fabricante de microchips necesita optimizar su red logística de salida para mejorar la eficiencia y reducir costos. La empresa enfrenta varios desafíos en la gestión de su cadena de suministro de salida, incluyendo la capacidad limitada de almacenes, la elección del mensajero adecuado, y la gestión de las tarifas de envío según el peso y el nivel de servicio requerido por el cliente. La complejidad aumenta debido a la diversidad de productos, las restricciones específicas de los almacenes, y las variaciones en las tarifas de los mensajeros.
@@ -88,4 +89,28 @@ Cargos Adicionales por Peso: Análisis de cómo los cargos mínimos y las tarifa
 Rutas más Eficientes: Identificación de rutas de envío que minimizan costos y tiempos de entrega.
 
 # 3. Modelo de datos
+
+## 3.1. Hechos
+
+### fctOrderList
+
+- Order ID **(PK)**: Número de orden a enrutar	
+- Order Date: Fecha en que se realiza la orden
+- Origin Port: 	Puerdo de salida de la orden
+- Carrier: Transportista que traslada la orden
+- TPT: Tiempo de rendimiento de la orden
+- Service Level: Tipo de nivel de servicio
+- Ship ahead day count: Cantidad de días adelantados de la orden
+- Ship Late Day count: Cantidad de días de retraso de la orden
+- Customer: Consumidor que registro la orden
+- Product ID: ID del producto de la orden
+- Plant Code: Código de la planta de dónde salio la orden
+- Destination Port: Puerto de destino de la orden
+- Unit quantity: Cantidad de unidades de la orden
+- Weight: Peso de la orden
+
+## 3.2. Dimensiones
+
+
+
 
