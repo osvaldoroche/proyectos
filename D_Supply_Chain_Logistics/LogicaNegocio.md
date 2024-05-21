@@ -111,6 +111,57 @@ Rutas más Eficientes: Identificación de rutas de envío que minimizan costos y
 
 ## 3.2. Dimensiones
 
+### dimProduct
+
+Combinación de productos y almacen admitidas. 
+
+- Product ID: Id del producto
+- Plant code: Código de la planta
+
+### dimVimCustumers
+
+Almacenes que brindan soporte a clientes espécificos.
+
+- Custumers: 
+- Plant code: 
+
+### dimWhcost
+
+El costo asociado al almacenamiento de los productos en un almacén determinado medido en dólares por unidad.
+
+- Plant Code
+- costUnit
+
+### dimWhcapacities
+
+Capacidad de almacén medidas en el número de pedidos por día.
+
+- Plant code
+- Daily capacity
+
+### PlantPorts
+
+Describe los enlaces permitidos entre los almacenes y los puertos de envío.
+
+- Plant code
+- Port
+
+
+### FreightRates
+
+Describe los mensajeros disponibles, las brechas de peso para cada carril y las tarifas asociadas.
+
+- Carrier	
+- orig_port_cd
+- dest_port_cd	
+- minm_wgh_qty	
+- max_wgh_qty	
+- svc_cd	
+- minimum cost	
+- rate	
+- mode_dsc	
+- tpt_day_cnt	
+- Carrier type
 
 
 
