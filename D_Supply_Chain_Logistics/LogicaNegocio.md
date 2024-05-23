@@ -19,8 +19,11 @@ El fabricante de microchips necesita optimizar su red logística de salida para 
 
 Desarrollar un dashboard en Power BI que ayude a los gerentes de la cadena de suministro a tomar decisiones informadas basadas en indicadores clave de rendimiento (KPIs). Este dashboard debe proporcionar una visión integral y detallada sobre el flujo de pedidos, costos de almacenamiento, tarifas de envío, y capacidades de los almacenes, permitiendo optimizar rutas de envío y minimizar costos.
 
+## 2.2. Pregunta general
 
-## 2.2. Preguntas a solventar
+**¿Cuál es la manera más eficiente de enrutarse los 9225 ordenes disponibles?**
+
+## 2.2. Preguntas especificas
 
 **a) Capacidad de Almacenamiento**
 
@@ -59,34 +62,41 @@ Se han identificado una serie de indicadores clave de rendimiento (KPI's) para r
 
 **a) Capacidad de Almacenes:**
 
-Pedidos Procesados vs. Capacidad Máxima: Mostrar el porcentaje de capacidad utilizada en cada almacén.
-Pedidos Pendientes: Número de pedidos que no pudieron ser procesados debido a la falta de capacidad.
++ Pedidos Procesados vs. Capacidad Máxima: Mostrar el porcentaje de capacidad utilizada en cada almacén.
+
++ Pedidos Pendientes: Número de pedidos que no pudieron ser procesados debido a la falta de capacidad.
 
 **b) Costos de Almacenamiento:**
 
-Costo Total de Almacenamiento por Almacén: Costo acumulado de almacenamiento en cada almacén.
-Costo Promedio por Unidad Almacenada: Costo promedio de almacenamiento por unidad de producto en cada almacén.
++ Costo Total de Almacenamiento por Almacén: Costo acumulado de almacenamiento en cada almacén.
+
++ Costo Promedio por Unidad Almacenada: Costo promedio de almacenamiento por unidad de producto en cada almacén.
 
 **c) Eficiencia de Envío:**
 
-Costo de Envío por Pedido: Costo total del envío dividido por el número de pedidos.
-Costo de Envío por Peso: Costo total del envío dividido por el peso total de los envíos.
-Tiempo Promedio de Envío: Tiempo promedio desde que se procesa un pedido hasta que se entrega.
++ Costo de Envío por Pedido: Costo total del envío dividido por el número de pedidos.
+
++ Costo de Envío por Peso: Costo total del envío dividido por el peso total de los envíos.
+
++ Tiempo Promedio de Envío: Tiempo promedio desde que se procesa un pedido hasta que se entrega.
 
 **d) Utilización de Mensajeros:**
 
-Distribución de Envíos por Mensajero: Número de pedidos gestionados por cada empresa de mensajería.
-Costo Promedio por Mensajero: Costo promedio de envío por cada empresa de mensajería.
++ Distribución de Envíos por Mensajero: Número de pedidos gestionados por cada empresa de mensajería.
+
++ Costo Promedio por Mensajero: Costo promedio de envío por cada empresa de mensajería.
 
 **e) Nivel de Servicio:**
 
-Distribución de Pedidos por Nivel de Servicio: Número de pedidos clasificados por DTD, DTP y CRF.
-Satisfacción del Cliente (Proxy): Medida indirecta basada en la elección de nivel de servicio más rápido (asumido como mayor satisfacción).
++ Distribución de Pedidos por Nivel de Servicio: Número de pedidos clasificados por DTD, DTP y CRF.
+
++ Satisfacción del Cliente (Proxy): Medida indirecta basada en la elección de nivel de servicio más rápido (asumido como mayor satisfacción).
 
 **f) Optimización de Rutas:**
 
-Cargos Adicionales por Peso: Análisis de cómo los cargos mínimos y las tarifas reducidas por peso afectan los costos totales.
-Rutas más Eficientes: Identificación de rutas de envío que minimizan costos y tiempos de entrega.
++ Cargos Adicionales por Peso: Análisis de cómo los cargos mínimos y las tarifas reducidas por peso afectan los costos totales.
+
++ Rutas más Eficientes: Identificación de rutas de envío que minimizan costos y tiempos de entrega.
 
 # 3. Modelo de datos
 
@@ -162,6 +172,7 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 - mode_dsc	
 - tpt_day_cnt	
 - Carrier type
+
 
 
 
