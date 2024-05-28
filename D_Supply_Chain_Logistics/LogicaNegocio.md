@@ -174,5 +174,93 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 - Carrier type
 
 
+## 3.3. Nuevo modelo
+
+1. Clientes
+2. Productos
+3. almacenes y Puertos
+5. Tipo de envio
+6. Enlaces puerto-almacen
+7. Ordenes
+
+## 3.4. Entidades nuevas
+
+### Custumers
+
+- custumer id
+- custumer_special = T/F
+- whAvailable
+- Plant ID
+
+### Ordenes
+
+- order ID
+- order date
+- carrier ID
+- Service ID
+- Custumer ID
+- Product ID
+- Plant ID
+- TPT
+- Ship ahead day count	
+- Ship Late Day count
+- Unit quantity	
+- Weight
+
+### Products
+
+- Product ID
+- Plant_production
+- Plant ID
+- costUnit
+- dailyCapacity
+- ports ID
+
+### TipoServicio
+
+- Service ID
+
+### Carriers
+
+- Carrier_ID
+- Modo_transporte
+- CarrierType
+- PortOrigin
+- PortDestin
+- minm_wgh_qty	
+- max_wgh_qty
+- minimum cost	
+- rate
+- tpt_day_cnt
+
+
+## 3.5. Relaciones
+
++ Un **consumidor** pide una o más **ordenes** y una **orden** pertenece a un solo **consumidor**. (_M-1_)
+
++ Una **orden** tiene un **tipo de servicio** y a un **tipo de servicio** le pertenecen una o más **ordenes**. (_1-M_)
+
++ Una **orden** es llevada por un solo **mensajero** y a un **mensajero** le corresponden muchas **ordenes**. (_1-M_)
+
++ Una **orden** contiene uno o más **productos** y un **producto** pertenece a una sola **orden**. (_1-M_)
+
++ Un **producto** se guarda en un **almacen** y un **almacen** guarda muchos **productos**. (_1-M_) (unir a tabla productos)
+
++ A un **almacen** le corresponde un **puerto** y a un **puerto** le corresponden muchos **almacenes**. (_1-M_) (unir a tabla productos)
+
++ Una **orden** se hace en una **fecha** y a un **fecha** le corresponden muchas **ordenes**. (_1-M_)
+
+## 3.6. Modelo relacional 
+
+jpg
+
+
+
+
+
+
+
+
+
 
 
