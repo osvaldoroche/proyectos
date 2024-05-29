@@ -156,7 +156,6 @@ Describe los enlaces permitidos entre los almacenes y los puertos de envío.
 - Plant code
 - Port
 
-
 ### FreightRates
 
 Describe los mensajeros disponibles, las brechas de peso para cada carril y las tarifas asociadas.
@@ -173,7 +172,6 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 - tpt_day_cnt	
 - Carrier type
 
-
 ## 3.3. Nuevo modelo
 
 1. Clientes
@@ -187,20 +185,17 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 
 ### Custumers
 
-- custumer id
+- custumer ID **(PK)**
 - custumer_special = T/F
-- whAvailable
-- Plant ID
 
 ### Ordenes
 
-- order ID
-- order date
-- carrier ID
-- Service ID
-- Custumer ID
-- Product ID
-- Plant ID
+- order ID **(PK)**
+- orderDate **(FK)**
+- Service ID **(FK)**
+- Custumer ID **(FK)**
+- Product ID **(FK)**
+- PortOriDes ID **(FK)**
 - TPT
 - Ship ahead day count	
 - Ship Late Day count
@@ -209,30 +204,38 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 
 ### Products
 
-- Product ID
-- Plant_production
+- Product ID **(PK)**
 - Plant ID
+- Ports ID
 - costUnit
 - dailyCapacity
-- ports ID
 
 ### TipoServicio
 
-- Service ID
+- Service ID **(PK)**
 
 ### Carriers
 
-- Carrier_ID
+- Carrier_ID 
 - Modo_transporte
 - CarrierType
-- PortOrigin
-- PortDestin
+- PortOrigin (cb)
+- PortDestin (cb)
+- PortOrDes ID = portO & porD **(PK)**
 - minm_wgh_qty	
 - max_wgh_qty
 - minimum cost	
 - rate
 - tpt_day_cnt
 
+### Calendar
+
+- Date **(PK)**
+- day
+- month
+- year
+- numSem
+- trimes
 
 ## 3.5. Relaciones
 
@@ -244,15 +247,19 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 
 + Una **orden** contiene uno o más **productos** y un **producto** pertenece a una sola **orden**. (_1-M_)
 
++ Una **orden** se hace en una **fecha** y a un **fecha** le corresponden muchas **ordenes**. (_1-M_)
+
+## 3.6. Relaciones internas
+
 + Un **producto** se guarda en un **almacen** y un **almacen** guarda muchos **productos**. (_1-M_) (unir a tabla productos)
 
 + A un **almacen** le corresponde un **puerto** y a un **puerto** le corresponden muchos **almacenes**. (_1-M_) (unir a tabla productos)
 
-+ Una **orden** se hace en una **fecha** y a un **fecha** le corresponden muchas **ordenes**. (_1-M_)
-
 ## 3.6. Modelo relacional 
 
-jpg
+Se realizará dentro de PBI. De otra forma se podría hacer en SQL pero el modelo debería cambiar y normalizarse más. El modelo de datos final es el siguiente:
+
+JPG
 
 
 
