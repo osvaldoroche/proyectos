@@ -172,63 +172,65 @@ Describe los mensajeros disponibles, las brechas de peso para cada carril y las 
 - tpt_day_cnt	
 - Carrier type
 
-## 3.3. Nuevo modelo
+## 3.3. Nuevo modelo de datos
 
-1. Clientes
-2. Productos
-3. almacenes y Puertos
-5. Tipo de envio
-6. Enlaces puerto-almacen
-7. Ordenes
+El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Query, aunque es facilmente replicable en otros lenjuages como R o Python para un proceso más automatizado. Eso queda fuera de este proyecto. Las tablas resultantes del proceso ETL serán las que formen el modelo de datos, se espera que sean 7, una tabla de hechos (H) y 6 dimensiones (D):
 
-## 3.4. Entidades nuevas
+1. Clientes (D)
+2. Ordenes (H)
+3. Productos (D)
+5. Tipo de servicio (D)
+6. Carrier (D)
+7. Calendario (D)
 
-### Custumers
+## 3.4. Entidades Nuevas (Tablas)
+
+### Custumers (D)
 
 - custumer ID **(PK)**
 - custumer_special = T/F
 
-### Ordenes
+### Ordenes (H)
 
 - order ID **(PK)**
 - orderDate **(FK)**
 - Service ID **(FK)**
 - Custumer ID **(FK)**
 - Product ID **(FK)**
-- PortOriDes ID **(FK)**
+- PortODCarrier ID **(FK)**
 - TPT
 - Ship ahead day count	
 - Ship Late Day count
 - Unit quantity	
 - Weight
+- PortsOrigin
+- PortsDestin
 
 ### Products
 
 - Product ID **(PK)**
-- Plant ID
-- Ports ID
-- costUnit
-- dailyCapacity
+- PlantPortsDestino
+- ProductPlant
+- costUnitPlant
+- dailyCapacityPlant
 
-### TipoServicio
+### TipoServicio (D)
 
 - Service ID **(PK)**
 
-### Carriers
+### Carriers (D)
 
 - Carrier_ID 
 - Modo_transporte
 - CarrierType
-- PortOrigin (cb)
-- PortDestin (cb)
-- PortOrDes ID = portO & porD **(PK)**
+- PortODCarrier **(PK)**
 - minm_wgh_qty	
 - max_wgh_qty
 - minimum cost	
 - rate
 - tpt_day_cnt
 
-### Calendar
+### Calendar (D)
 
 - Date **(PK)**
 - day
