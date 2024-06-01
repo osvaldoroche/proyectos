@@ -203,8 +203,6 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 - Ship Late Day count
 - Unit quantity	
 - Weight
-- PortsOrigin
-- PortsDestin
 
 ### Products
 
@@ -213,6 +211,8 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 - ProductPlant
 - costUnitPlant
 - dailyCapacityPlant
+- PortsOrigin
+- PortsDestin
 
 ### TipoServicio (D)
 
@@ -226,7 +226,7 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 - PortODCarrier **(PK)**
 - minm_wgh_qty	
 - max_wgh_qty
-- minimum cost	
+- minimumcost	
 - rate
 - tpt_day_cnt
 
@@ -261,7 +261,7 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 
 Se realizará dentro de PBI. De otra forma se podría hacer en SQL pero el modelo debería cambiar y normalizarse más. El modelo de datos final es el siguiente:
 
-JPG
+![Modelo relacional de la base de datos](C:/Users/DELL/Documents/GitHub/proyectos/D_Supply_Chain_Logistics/ModeloSCLP.png)
 
 
 
