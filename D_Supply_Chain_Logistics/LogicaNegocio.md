@@ -261,7 +261,7 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 
 Se realizará dentro de PBI. De otra forma se podría hacer en SQL pero el modelo debería cambiar y normalizarse más. El modelo de datos final es el siguiente:
 
-![Modelo relacional de la base de datos](C:/Users/DELL/Documents/GitHub/proyectos/D_Supply_Chain_Logistics/ModeloSCLP.png)
+![Modelo relacional de la base de datos](ModeloSCLP.png)
 
 
 
