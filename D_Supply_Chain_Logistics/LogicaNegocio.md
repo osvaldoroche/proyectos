@@ -27,12 +27,12 @@ Desarrollar un dashboard en Power BI que ayude a los gerentes de la cadena de su
 
 **a) Capacidad de Almacenamiento**
 
-1. ¿Qué porcentaje de la capacidad máxima está siendo utilizada en el almacen?
-2. ¿Cuántos pedidos están pendientes por la falta de capacidad de almacenamiento?
+1. ¿Qué porcentaje de la capacidad máxima está siendo utilizada en el almacen? (SI)
+2. ¿Cuántos pedidos están pendientes por la falta de capacidad de almacenamiento? (NO)
 
 **b) Costos de almacenamiento**
 
-3. ¿Cuál es el costo total de almacenamiento en cada almacén?
+3. ¿Cuál es el costo total de almacenamiento en cada almacén? (SI)
 4. ¿Cuál es el costo promedio de almacenamiento por unidad de producto en cada almacén?
 
 **c) Eficiencia de Envío**
@@ -262,11 +262,6 @@ El nuevo modelo de datos surge del proceso ETL que se llevara a cabo en Power Qu
 Se realizará dentro de PBI. De otra forma se podría hacer en SQL pero el modelo debería cambiar y normalizarse más. El modelo de datos final es el siguiente:
 
 ![Modelo relacional de la base de datos](ModeloSCLP.png)
-
-
-
-
-
 
 
 
