@@ -1,0 +1,213 @@
+---
+title: "Formulas DAX de proyectos Power BI"
+author: "Osvaldo Roche"
+date: "2024-09-01"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+```
+
+
+# 1. Documentación Supply Chain Logistic Problem
+
+### Medida 1: Obtener el peso total de los productos
+
+Para ello hacemos una suma simple con SUM a toda la columna de peso de la tabla principal. Se puede presentar en matriz con los productos respectivos o en una viñeta.
+
+```{r, eval=FALSE}
+Peso de productos = SUM(OrderList[Weight])
+```
+
+### Medida 2: Obtener el peso promedio por productos (o cualquier otra variable)
+
+Utilizamos la función AVERAGE para sacar un promedio simple a través de la columna Weight de la tabla principal. Se puede presentar en matriz con los productos respectivos o en una viñeta.
+
+```{r, eval=FALSE}
+Peso promedio = AVERAGE(OrderList[Weight])
+```
+
+### Medida 3: Obtener el peso promedio de los productos guardado en un almacén (o cualquier otra variable)
+
+La primera forma de utilizarlo es través de la función AVERAGEX y VALUES. Primero AVERAGEX recibe la tabla virtual por medio de la función VALUES que contine los productos diferentes por almacén (debido a un objeto visual matriz o tabla). Luego AVERAGEX recibe el parámetro, en este caso una medida existente de suma [Peso de pedidos] que se calcula para cada producto diferente de VALUES por almacén. Por último, AVERAGEX repite el proceso de calcula el promedio de la tabla virtual para cada almacén. 
+
+```{r, eval=FALSE}
+Peso promedio de los productos= 
+  AVERAGEX(
+      VALUES(products[Product]),
+      [Peso de productos]
+  )
+```
+
+
+### Medida 4: Obtener el peso promedio de los productos guardado en un almacén con múltiples agrupaciones (o cualquier otra variable)
+
+La segunda forma de obtener el peso promedio de los productos de un almacén es a través de SUMMARIZE. Para ello usamos AVERAGEX quien recibe una tabla virtual expandida creada con SUMMARIZE, que agrupará a través de suma los pesos de los productos con la medida de suma [Peso de pedidos] y se aplicará la agregación de promedio AVERAGEX por cada almacén del objeto visual matriz o tabla. A diferencia del anterior, con SUMMARIZE se puede agregar más variables de agrupación para sacar el promedio como, por ejemplo: país, día, año, tipo de servicio, etc. 
+
+
+```{r, eval=FALSE}
+Peso promedio de los productos = 
+AVERAGEX(
+    SUMMARIZE( #Tabla virtual agrupada
+        OrderList,
+        products[Product]
+        ),
+    [Peso de productos] # Medida por la que se agruparan
+)
+```
+
+
+### Medida 5: Calcular el peso porcentual de los productos por almacén
+
+**Paso 1:** Calcular el peso absoluto. El peso total lo podemos obtener con la medida simple de suma [peso de productos] pero para calcular el total sin que afecten los filtros internos y por el cual se puedan dividir las filas relativas, será necesario utilizar ALLSELECTED y CALCULATE.  ALLSELECTED ignora los filtros internos y deja solo los filtros externos para toda la tabla principal, de manera que se pueden hacer las sumas por cualquier segmentación externa del informe y calcular el total del peso de los productos.
+
+```{r, eval=FALSE}
+Peso absoluto de productos = 
+CALCULATE(
+    [Peso de productos],
+    ALLSELECTED(OrderList)
+)
+```
+
+**Paso 2:** Calcular el porcentaje del peso. El porcentaje simplemente se calcula con la función DIVIDE a la cual se le pasa de numerador la medida [peso de productos] y como denominador [Peso absoluto de productos]. Luego se coloca en una matriz o tabla del informe.
+
+
+```{r, eval=FALSE}
+Peso relativo porcentual (%) = 
+DIVIDE(
+    [Peso de productos],
+    [Peso absoluto de productos]
+)
+```
+
+### Medida 6: Obtener el peso por planta de los productos con envío DPT
+
+Para ello usamos la función CALCULATE que recibe una medida de suma [peso de productos] y un modificador de filtro en forma de tabla por medio de la columna service ID de la dimensión tipo de servicio. De ello obtenemos dos contextos de filtros, el primero viene de la matriz o tabla visual con los almacenes y el segundo filtro por la tabla de la segunda expresión de CALCULATE.
+
+```{r, eval=FALSE}
+Peso de productos con envio DTP = 
+CALCULATE(
+    [Peso de pedidos], # Expresión a evaluar después del filtro
+    typeService[service ID] = "DTP" # filtro en forma de tabla
+)
+```
+
+
+### Medida 8: Obtener el peso por planta de los productos con envío DPT y que sean de un consumidor especial (o cualquier otra variable)
+
+Siempre usando CALCULATE podemos expresar una medida existente de suma [Peso de productos] y generar una tabla en forma de filtro con la función FILTER. Esto debido a que CALCULATE no puede tomar otro filtro directamente si es de una tabla distinta a la principal o a la que se está evaluando, de manera que creamos una tabla de filtro dentro de CALCULATE. Para ello usamos SUMMARIZE como primer argumento en FILTER con el agrupamiento de service ID de la dimensión tipo de servicio y custumerSpecial de la dimensión consumidores. Luego como segundo argumento de FILTER pasamos las condiciones a evaluar dentro de la tabla virtual creada. Finalmente se ejecuta el primer argumento de CALCULATE para hacer la suma de los pesos por planta de acuerdo al filtro de tabla creado con FILTER.
+
+```{r, eval=FALSE}
+Peso de productos con envio DTP y consumidor especial = 
+CALCULATE(
+    [Peso de productos],
+    FILTER(
+        SUMMARIZE(
+            OrderList,
+            typeService[service ID],
+            custumers[custumerSpecial]
+        ),
+        typeService[service ID] = "DTP" &&
+        custumers[custumerSpecial] = "1"
+    )
+)
+```
+
+### Medida 9: Número de productos con más de una orden por almacén
+
+Podemos usar FILTER como filtro de tabla dentro de CALCULATE para obtener que productos tiene más de una orden por almacén. CALCULATE recibe un recuento de productos de la tabla principal [número de productos] y como segundo argumento recibe la tabla filtro creada por FILTER. FILTER recibe como primer argumento una tabla original de productos, como segundo argumento recibe las ordenes distintas, para eso se utiliza otro CALCULATE de manera que exista una transición de contexto y los productos se agreguen como filtro a la tabla principal. Por último, se ejecuta la función de recuento que calcula cuantos productos aparecen en más de una orden por cada planta.
+
+```{r, eval=FALSE}
+Numero de productos > 1 orden = 
+CALCULATE(
+    [Numero de productos],
+    FILTER(
+        products,
+        CALCULATE(DISTINCTCOUNT(OrderList[Order ID])) > 1
+    )
+)
+
+Donde:
+  
+Numero de productos = DISTINCTCOUNT(OrderList[producto])
+```
+
+
+### Medida 10: Contar cuántas ordenes tienen más de 500 unidades
+
+Para ello podemos usar la función COUNTROWS y FILTER en una medida nueva, COUNTROWS ayudará a contar los valores obtenidos con la iteración de FILTER (tabla virtual), en un contexto de filtro del objeto visual elegido, en este caso una viñeta simple. El resultado será de 4,409 órdenes con más de 500 unidades de productos:
+
+```{r, eval=FALSE}
+Ordenes con mas de 500 productos = 
+COUNTROWS( # recibe tabla creada con FILTER y cuenta las filas
+    FILTER(
+        OrderList, # recibe una tabla original
+        OrderList[Unit quantity] > 500 # aplica condición fila a fila
+    )
+)
+```
+
+
+# 2. Documentación Ventas y Proyeccines
+
+### Medida 1: Obtener el total de ingresos (o el total de otra variable)
+
+```{r, eval=FALSE}
+Ingresos = sum(Ingresos[Ingreso Total reserva])
+```
+
+### Medida 2: Obtener el número de hoteles totales (o el total de otra variable)
+
+```{r, eval=FALSE}
+Numero Hoteles = DISTINCTCOUNT( Ingresos[ID_Hotel]) # Cuenta los distintos de la tabla
+```
+
+### Medida 3: Obtener el precio de venta promedio (o el promedio de otra variable)
+
+
+```{r, eval=FALSE}
+Precio Venta Promedio = 
+  AVERAGE(Ingresos[Precio Promedio por habitación])
+```
+
+### Medida 4: Cantidad de Reservas
+
+```{r, eval=FALSE}
+Reservas = COUNTROWS(Ingresos) # Cantidad de filas de la tabla deseada
+```
+
+### Medida 5: Obtener el total de clientes
+
+```{r, eval=FALSE}
+Total Clientes = DISTINCTCOUNT(Ingresos[ID_Cliente]) # cuenta los distintos de la tabla y columna deseada
+```
+
+### Medida 6: Obtener el total de huéspedes
+
+```{r, eval=FALSE}
+Total Huespedes = sum(Ingresos[Total huesped]) # suma de una columna deseada
+```
+
+### Medida 7: Obtener una tarjeta que diga el tipo de hotel seleccionado
+
+```{r, eval=FALSE}
+Titulo Tipo Hotel = 
+  "Tipo de Hotel: " & SELECTEDVALUE(Hoteles[Tipo Hotel])
+```
+
+### Medida 8: Obtener el ingreso promedio por huesped
+
+```{r, eval=FALSE}
+Gasto Promedio por huesped = 
+  DIVIDE(
+    [Ingresos], #Numerador
+    [Total Huespedes] #denominador
+         )
+```
+
+
+
+
+
+
