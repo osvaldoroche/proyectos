@@ -149,9 +149,11 @@ COUNTROWS( # recibe tabla creada con FILTER y cuenta las filas
 ```
 
 
-# 2. Documentación Ventas y Proyeccines
+# 2. Documentación Ventas y Proyecciones
 
 ### Medida 1: Obtener el total de ingresos (o el total de otra variable)
+
+Para ellos utilizamos una función de suma simple SUM con la tabla y la columna que queremos sumar.
 
 ```{r, eval=FALSE}
 Ingresos = sum(Ingresos[Ingreso Total reserva])
@@ -159,12 +161,15 @@ Ingresos = sum(Ingresos[Ingreso Total reserva])
 
 ### Medida 2: Obtener el número de hoteles totales (o el total de otra variable)
 
+Usamos la función DISTINCTCOUNT con la tabla y columnas de donde queremos sacar los valores distintos.
+
 ```{r, eval=FALSE}
 Numero Hoteles = DISTINCTCOUNT( Ingresos[ID_Hotel]) # Cuenta los distintos de la tabla
 ```
 
 ### Medida 3: Obtener el precio de venta promedio (o el promedio de otra variable)
 
+Su usa el promedio simple con AVERAGE pasando como argumento la tabla y columna a la que le queremos sacar el promedio.
 
 ```{r, eval=FALSE}
 Precio Venta Promedio = 
@@ -205,6 +210,58 @@ Gasto Promedio por huesped =
     [Total Huespedes] #denominador
          )
 ```
+
+
+### Medida 9: Obtener los ingresos del periodo pasado (last Date)
+
+En este punto usamos CALCULATE. Pasamos como primer argumento el parámetro que es una medida existente de suma `[ingresos]` y como segundo argumento la SAMEPERIODLASTYEAR función que devuelve una tabla con fechas de un año atras desde el contexto de filtro actual. Es decir, si tenemos una matriz visual con fechas del año 2024 como contexto de filtro, la función SAMEPERIODLASTYEAR retornará una tabla con las mismas fechas pero del año 2023, el cual debido a CALCULATE, se transformarán en el nuevo contexto de filtro y procederá la suma por medio de la medida existente `[Ingresos]` de las fechas de ese año 2023.
+
+```{r, eval=FALSE}
+Ingresos LY = 
+CALCULATE(
+    [Ingresos], # una medida existente de suma como parámetro
+    SAMEPERIODLASTYEAR(Calendario[Date]) #Tabla con la fecha del año pasado
+)
+```
+
+
+### Medida 10: Variación de ingresos actuales vs ingresos pasados
+
+Esta es una simple resta que se hace con las dos medidas calculadas, a los ingresos del año corriente (o la fecha actual) se le restan los ingresos del año pasado (o la fecha pasada). Es decir bajo la simple formula $(\Delta) = Y_{t} - Y_{t-1}$. 
+
+```{r, eval=FALSE}
+Variación = [Ingresos] - [Ingresos LY]
+```
+
+### Medida 11: Variación porcentual de ingresos entre dos periodos
+
+De igual forma esta es una simple división entre la medida de variación y los ingresos pasados. Es decir de la forma $(\Delta)~\% = \dfrac{(\Delta)}{Y_{t-1}}$.
+
+```{r, eval=FALSE}
+var % ingresos = 
+DIVIDE(
+    [Variación],
+    [Ingresos LY]
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

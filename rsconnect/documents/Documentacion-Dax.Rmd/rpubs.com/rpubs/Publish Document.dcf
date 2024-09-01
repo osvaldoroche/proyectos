@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/1215301/71a0195c28ed44bbb46055f14256ff9e
+bundleId: https://api.rpubs.com/api/v1/document/1215301/71a0195c28ed44bbb46055f14256ff9e
+url: http://rpubs.com/Osvaldo_Roche/1215301
+version: 1

@@ -1274,8 +1274,8 @@ margin-left: 0 !important;
       <ul>
       <li><a href="#documentación-supply-chain-logistic-problem" id="toc-documentación-supply-chain-logistic-problem">1.
       Documentación Supply Chain Logistic Problem</a></li>
-      <li><a href="#documentación-ventas-y-proyeccines" id="toc-documentación-ventas-y-proyeccines">2. Documentación
-      Ventas y Proyeccines</a></li>
+      <li><a href="#documentación-ventas-y-proyecciones" id="toc-documentación-ventas-y-proyecciones">2. Documentación
+      Ventas y Proyecciones</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -1457,21 +1457,27 @@ elegido, en este caso una viñeta simple. El resultado será de 4,409
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
-<div id="documentación-ventas-y-proyeccines" class="section level1">
-<h1>2. Documentación Ventas y Proyeccines</h1>
+<div id="documentación-ventas-y-proyecciones" class="section level1">
+<h1>2. Documentación Ventas y Proyecciones</h1>
 <div id="medida-1-obtener-el-total-de-ingresos-o-el-total-de-otra-variable" class="section level3">
 <h3>Medida 1: Obtener el total de ingresos (o el total de otra
 variable)</h3>
+<p>Para ellos utilizamos una función de suma simple SUM con la tabla y
+la columna que queremos sumar.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>Ingresos <span class="ot">=</span> <span class="fu">sum</span>(Ingresos[Ingreso Total reserva])</span></code></pre></div>
 </div>
 <div id="medida-2-obtener-el-número-de-hoteles-totales-o-el-total-de-otra-variable" class="section level3">
 <h3>Medida 2: Obtener el número de hoteles totales (o el total de otra
 variable)</h3>
+<p>Usamos la función DISTINCTCOUNT con la tabla y columnas de donde
+queremos sacar los valores distintos.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>Numero Hoteles <span class="ot">=</span> <span class="fu">DISTINCTCOUNT</span>( Ingresos[ID_Hotel]) <span class="co"># Cuenta los distintos de la tabla</span></span></code></pre></div>
 </div>
 <div id="medida-3-obtener-el-precio-de-venta-promedio-o-el-promedio-de-otra-variable" class="section level3">
 <h3>Medida 3: Obtener el precio de venta promedio (o el promedio de otra
 variable)</h3>
+<p>Su usa el promedio simple con AVERAGE pasando como argumento la tabla
+y columna a la que le queremos sacar el promedio.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>Precio Venta Promedio <span class="ot">=</span> </span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">AVERAGE</span>(Ingresos[Precio Promedio por habitación])</span></code></pre></div>
 </div>
@@ -1500,6 +1506,44 @@ seleccionado</h3>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    [Ingresos], <span class="co">#Numerador</span></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    [Total Huespedes] <span class="co">#denominador</span></span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>         )</span></code></pre></div>
+</div>
+<div id="medida-9-obtener-los-ingresos-del-periodo-pasado-last-date" class="section level3">
+<h3>Medida 9: Obtener los ingresos del periodo pasado (last Date)</h3>
+<p>En este punto usamos CALCULATE. Pasamos como primer argumento el
+parámetro que es una medida existente de suma <code>[ingresos]</code> y
+como segundo argumento la SAMEPERIODLASTYEAR función que devuelve una
+tabla con fechas de un año atras desde el contexto de filtro actual. Es
+decir, si tenemos una matriz visual con fechas del año 2024 como
+contexto de filtro, la función SAMEPERIODLASTYEAR retornará una tabla
+con las mismas fechas pero del año 2023, el cual debido a CALCULATE, se
+transformarán en el nuevo contexto de filtro y procederá la suma por
+medio de la medida existente <code>[Ingresos]</code> de las fechas de
+ese año 2023.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>Ingresos LY <span class="ot">=</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">CALCULATE</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    [Ingresos], <span class="co"># una medida existente de suma como parámetro</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    <span class="fu">SAMEPERIODLASTYEAR</span>(Calendario[Date]) <span class="co">#Tabla con la fecha del año pasado</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="medida-10-variación-de-ingresos-actuales-vs-ingresos-pasados" class="section level3">
+<h3>Medida 10: Variación de ingresos actuales vs ingresos pasados</h3>
+<p>Esta es una simple resta que se hace con las dos medidas calculadas,
+a los ingresos del año corriente (o la fecha actual) se le restan los
+ingresos del año pasado (o la fecha pasada). Es decir bajo la simple
+formula <span class="math inline">\((\Delta) = Y_{t} -
+Y_{t-1}\)</span>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>Variación <span class="ot">=</span> [Ingresos] <span class="sc">-</span> [Ingresos LY]</span></code></pre></div>
+</div>
+<div id="medida-11-variación-porcentual-de-ingresos-entre-dos-periodos" class="section level3">
+<h3>Medida 11: Variación porcentual de ingresos entre dos periodos</h3>
+<p>De igual forma esta es una simple división entre la medida de
+variación y los ingresos pasados. Es decir de la forma <span class="math inline">\((\Delta)~\% =
+\dfrac{(\Delta)}{Y_{t-1}}\)</span>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>var % ingresos <span class="ot">=</span> </span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">DIVIDE</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    [Variación],</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    [Ingresos LY]</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
 </div>
